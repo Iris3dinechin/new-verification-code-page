@@ -4,6 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vérification de Code</title>
+    <style>
+        .hint {
+            font-style: italic;
+            color: blue;
+        }
+        .important {
+            font-weight: bold;
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
     <h1>Vous êtes arrivées devant le bâtiment du barrage ! Mais la porte est fermée... Entrez le Code à 4 Chiffres pour accéder au barrage</h1>
@@ -12,16 +22,27 @@
     <p id="message"></p>
 
     <script>
+        let attemptCount = 0;
+
         function verifyCode() {
             const code = document.getElementById('code').value;
             const correctCode = '5639'; // Remplacez par le code correct
             const message = document.getElementById('message');
 
             if (code === correctCode) {
-                message.textContent = 'Code correct ! Maintenant, il faut trouver Charles !';
+                message.innerHTML = 'Code correct ! vous entrez maintenant dans le bâtiment. Maintenant, il faut trouver Charles, vite ! les minutes sont comptées. Charles se trouve en salle Palimitane.';
                 message.style.color = 'green';
             } else {
-                message.textContent = 'Code incorrect. Essayez à nouveau.';
+                attemptCount++;
+                if (attemptCount === 1) {
+                    message.innerHTML = 'Code incorrect. Essayez à nouveau. <span class="hint">Vous avez découvert lors de vos recherches de mystérieux calques de couleurs... Et si ça avait un rapport avec le plan du barrage ?</span>';
+                } else if (attemptCount === 2) {
+                    message.innerHTML = 'Code incorrect. Essayez à nouveau. <span class="hint">Les couleurs primaires servent à générer toutes les couleurs que l\'on veut !</span>';
+                } else if (attemptCount === 3) {
+                    message.innerHTML = 'Code incorrect. Essayez à nouveau. <span class="hint">Une case de la grille doit être <span class="important">entièrement</span> recouverte de la couleur souhaitée.</span>';
+                } else {
+                    message.innerHTML = 'Code incorrect. Essayez à nouveau.';
+                }
                 message.style.color = 'red';
             }
         }
