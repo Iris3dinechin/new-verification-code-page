@@ -5,13 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vérification de Code</title>
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
         .hint {
             font-style: italic;
             color: blue;
+            display: block;
+            margin-top: 10px;
         }
         .important {
             font-weight: bold;
             text-decoration: underline;
+        }
+        .hidden {
+            display: none;
+        }
+        #fireworks {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
         }
     </style>
 </head>
@@ -20,30 +39,52 @@
     <input type="text" id="code" maxlength="4" placeholder="Code à 4 chiffres">
     <button onclick="verifyCode()">Vérifier</button>
     <p id="message"></p>
+    <button id="hintButton" class="hidden" onclick="showHint()">Indice ?</button>
+
+    <!-- Fireworks Animation -->
+    <div id="fireworks"></div>
 
     <script>
         let attemptCount = 0;
+        let hintIndex = 0;
+        const hints = [
+            "Vous avez découvert lors de vos recherches de mystérieux calques de couleurs...<br>Et si ça avait un rapport avec le plan du barrage ?",
+            "Les couleurs primaires servent à générer toutes les couleurs que l'on veut !",
+            "Une case de la grille doit être <span class='important'>entièrement</span> recouverte de la couleur souhaitée."
+        ];
 
         function verifyCode() {
             const code = document.getElementById('code').value;
             const correctCode = '5639'; // Remplacez par le code correct
             const message = document.getElementById('message');
+            const hintButton = document.getElementById('hintButton');
+            const fireworks = document.getElementById('fireworks');
 
             if (code === correctCode) {
-                message.innerHTML = 'Code correct ! vous entrez maintenant dans le bâtiment. Maintenant, il faut trouver Charles, vite ! les minutes sont comptées. Charles se trouve en salle Palimitane.';
+                message.innerHTML = 'Code correct !<br><br>Vous entrez maintenant dans le bâtiment.<br>Maintenant, il faut trouver Charles, vite !<br>Les minutes sont comptées.<br>Charles se trouve en salle Palimitane.';
                 message.style.color = 'green';
+                hintButton.classList.add('hidden');
+                fireworks.innerHTML = '<img src="https://media.giphy.com/media/XdFpBs4lkwozC/giphy.gif" alt="Fireworks" style="width:100%;">';
             } else {
                 attemptCount++;
-                if (attemptCount === 1) {
-                    message.innerHTML = 'Code incorrect. Essayez à nouveau. <span class="hint">Vous avez découvert lors de vos recherches de mystérieux calques de couleurs... Et si ça avait un rapport avec le plan du barrage ?</span>';
-                } else if (attemptCount === 2) {
-                    message.innerHTML = 'Code incorrect. Essayez à nouveau. <span class="hint">Les couleurs primaires servent à générer toutes les couleurs que l\'on veut !</span>';
-                } else if (attemptCount === 3) {
-                    message.innerHTML = 'Code incorrect. Essayez à nouveau. <span class="hint">Une case de la grille doit être <span class="important">entièrement</span> recouverte de la couleur souhaitée.</span>';
-                } else {
+                if (attemptCount >= 1 && attemptCount <= 3) {
+                    hintButton.classList.remove('hidden');
+                }
+                if (attemptCount > 3) {
                     message.innerHTML = 'Code incorrect. Essayez à nouveau.';
                 }
                 message.style.color = 'red';
+            }
+        }
+
+        function showHint() {
+            const message = document.getElementById('message');
+            if (hintIndex < hints.length) {
+                message.innerHTML += `<br><span class="hint">${hints[hintIndex]}</span>`;
+                hintIndex++;
+                if (hintIndex >= hints.length) {
+                    document.getElementById('hintButton').classList.add('hidden');
+                }
             }
         }
     </script>
