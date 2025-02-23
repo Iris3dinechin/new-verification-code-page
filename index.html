@@ -41,9 +41,6 @@
     <p id="message"></p>
     <button id="hintButton" class="hidden" onclick="showHint()">Indice ?</button>
 
-    <!-- Fireworks Animation -->
-    <div id="fireworks"></div>
-
     <script>
         let attemptCount = 0;
         let hintIndex = 0;
@@ -58,13 +55,11 @@
             const correctCode = '5639'; // Remplacez par le code correct
             const message = document.getElementById('message');
             const hintButton = document.getElementById('hintButton');
-            const fireworks = document.getElementById('fireworks');
 
             if (code === correctCode) {
                 message.innerHTML = 'Code correct !<br><br>Vous entrez maintenant dans le bâtiment.<br>Maintenant, il faut trouver Charles, vite !<br>Les minutes sont comptées.<br>Charles se trouve en salle Palimitane.';
                 message.style.color = 'green';
                 hintButton.classList.add('hidden');
-                fireworks.innerHTML = '<img src="https://media.giphy.com/media/XdFpBs4lkwozC/giphy.gif" alt="Fireworks" style="width:100%;">';
             } else {
                 attemptCount++;
                 if (attemptCount >= 1 && attemptCount <= 3) {
@@ -73,7 +68,7 @@
                 if (attemptCount > 3) {
                     message.innerHTML = 'Code incorrect. Essayez à nouveau.';
                 }
-                message.style.color = 'red'; 
+                message.style.color = 'red';
             }
         }
 
