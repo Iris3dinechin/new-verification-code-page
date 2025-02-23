@@ -23,14 +23,8 @@
         .hidden {
             display: none;
         }
-        #fireworks {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1000;
+        .error {
+            color: red;
         }
     </style>
 </head>
@@ -62,11 +56,12 @@
                 hintButton.classList.add('hidden');
             } else {
                 attemptCount++;
+                message.innerHTML = '<span class="error">Code incorrect.</span>';
                 if (attemptCount >= 1 && attemptCount <= 3) {
                     hintButton.classList.remove('hidden');
                 }
                 if (attemptCount > 3) {
-                    message.innerHTML = 'Code incorrect. Essayez à nouveau.';
+                    message.innerHTML += '<br>Essayez à nouveau.';
                 }
                 message.style.color = 'red';
             }
