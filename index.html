@@ -31,18 +31,7 @@
     </style>
 </head>
 <body>
-    <div id="step1">
-        <h1>Chères agents, il faut agir vite. Où voulez-vous aller fouiller maintenant ?</h1>
-        <div class="choice" onclick="selectLocation('Les Deux Rives')">Au café Les Deux Rives</div>
-        <div class="choice" onclick="selectLocation('Chez les Baratgin')">Chez les Baratgin</div>
-        <div class="choice" onclick="selectLocation('Chez RS')">Chez RS</div>
-        <div class="choice" onclick="selectLocation('Théâtre des Champs-Elysées')">Au théâtre des Champs-Elysées</div>
-        <p id="response1" class="error hidden">NON ! Vous n'avez pas de temps à perdre. Essayez un autre lieu.</p>
-        <p id="success1" class="success hidden">Cela me paraît une bonne piste : foncez !</p>
-        <button onclick="nextStep(2)" class="hidden" id="nextButton1">Étape suivante</button>
-    </div>
-
-    <div id="step2" class="hidden">
+       <div id="step2" class="hidden">
         <h1>Où voulez-vous aller fouiller maintenant ?</h1>
         <input type="text" id="locationInput" placeholder="Entrez le lieu">
         <button onclick="checkLocation()">Vérifier</button>
