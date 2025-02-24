@@ -8,7 +8,9 @@
         body {
             font-family: Arial, sans-serif;
             text-align: center;
-            margin: 20px;
+            margin: 0;
+            padding: 10px;
+            background: #f0f0f0;
         }
         .hidden {
             display: none;
@@ -24,20 +26,36 @@
             padding: 10px;
             border: 1px solid #ccc;
             cursor: pointer;
+            background-color: #fff;
+            border-radius: 5px;
         }
         .choice:hover {
             background-color: #f0f0f0;
         }
+        .container {
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background: #fff;
+            margin: 10px;
+        }
+        input[type="text"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body>
-    <div id="step1">
+    <div class="container" id="step1">
         <h1>Êtes-vous sûres d'avoir bien fouillé partout dans le café ?</h1>
         <button class="choice" onclick="nextStep(2)">OUI</button>
-        <button class="choice" onclick="nextStep(1)">NON</button>
+        <button class="choice" onclick="showAlert()">NON</button>
     </div>
 
-    <div id="step2" class="hidden">
+    <div class="container hidden" id="step2">
         <h1>Chères agents, il faut agir vite. Où voulez-vous aller fouiller maintenant ?</h1>
         <input type="text" id="locationInput" placeholder="Entrez le lieu">
         <button onclick="checkLocation()">Vérifier</button>
@@ -46,20 +64,20 @@
         <button onclick="nextStep(3)" class="hidden" id="nextButton2">Étape suivante</button>
     </div>
 
-    <div id="step3" class="hidden">
+    <div class="container hidden" id="step3">
         <h1>Chères agents, votre collègue a un rapport à vous remettre. Voulez-vous l'écouter ?</h1>
         <button onclick="playAudio()" class="choice">Écouter le rapport</button>
         <p id="audioResponse" class="success hidden">Écoutez attentivement le rapport audio.</p>
         <button onclick="nextStep(4)" class="hidden" id="nextButton3">Étape suivante</button>
     </div>
 
-    <div id="step4" class="hidden">
+    <div class="container hidden" id="step4">
         <h1>Êtes-vous sûres d'avoir bien fouillé partout au CIRED ?</h1>
         <button class="choice" onclick="nextStep(5)">OUI</button>
         <button class="choice" onclick="nextStep(3)">NON</button>
     </div>
 
-    <div id="step5" class="hidden">
+    <div class="container hidden" id="step5">
         <h1>Où pensez-vous que Charles est retenu prisonnier ?</h1>
         <div>
             <label for="department">Département : </label>
@@ -74,7 +92,7 @@
         <button onclick="nextStep(6)" class="hidden" id="nextButton5">Étape suivante</button>
     </div>
 
-    <div id="step6" class="hidden">
+    <div class="container hidden" id="step6">
         <h1>Vous êtes arrivées devant le bâtiment du barrage ! Mais la porte est fermée... Entrez le Code à 4 Chiffres pour accéder au barrage</h1>
         <input type="text" id="code" maxlength="4" placeholder="Code à 4 chiffres">
         <button onclick="verifyCode()">Vérifier</button>
@@ -97,6 +115,10 @@
             "Une case de la grille doit être <span class='important'>entièrement</span> recouverte de la couleur souhaitée."
         ];
 
+        function normalize(str) {
+            return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+        }
+
         function nextStep(step) {
             document.getElementById('step' + currentStep).classList.add('hidden');
             document.getElementById('audioReport').classList.add('hidden');
@@ -105,11 +127,11 @@
         }
 
         function checkLocation() {
-            const input = document.getElementById('locationInput').value.toUpperCase();
+            const input = normalize(document.getElementById('locationInput').value);
             const response2 = document.getElementById('response2');
             const success2 = document.getElementById('success2');
             const nextButton2 = document.getElementById('nextButton2');
-            if (input === 'CIRED') {
+            if (input === 'cired') {
                 response2.classList.add('hidden');
                 success2.classList.remove('hidden');
                 nextButton2.classList.remove('hidden');
@@ -131,12 +153,12 @@
         }
 
         function verifyAnswers() {
-            const department = document.getElementById('department').value.toUpperCase();
-            const owner = document.getElementById('owner').value.toUpperCase();
+            const department = normalize(document.getElementById('department').value);
+            const owner = normalize(document.getElementById('owner').value);
             const answerMessage = document.getElementById('answerMessage');
             const nextButton5 = document.getElementById('nextButton5');
 
-            if (department === 'LOZÈRE' && owner === 'BARAVIN') {
+            if (department === 'lozere' && owner === 'baravin') {
                 answerMessage.innerHTML = 'Réponses correctes !';
                 answerMessage.style.color = 'green';
                 answerMessage.classList.remove('hidden');
@@ -181,6 +203,10 @@
                     document.getElementById('hintButton').classList.add('hidden');
                 }
             }
+        }
+
+        function showAlert() {
+            alert("Du nerf !!");
         }
     </script>
 </body>
