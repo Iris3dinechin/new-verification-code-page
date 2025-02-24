@@ -3,22 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vérification de Code</title>
+    <title>Enquête DGSE</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             text-align: center;
             margin: 20px;
-        }
-        .hint {
-            font-style: italic;
-            color: blue;
-            display: block;
-            margin-top: 10px;
-        }
-        .important {
-            font-weight: bold;
-            text-decoration: underline;
         }
         .hidden {
             display: none;
@@ -26,16 +16,63 @@
         .error {
             color: red;
         }
+        .success {
+            color: green;
+        }
+        .choice {
+            margin: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+        }
+        .choice:hover {
+            background-color: #f0f0f0;
+        }
     </style>
 </head>
 <body>
-    <h1>Vous êtes arrivées devant le bâtiment du barrage ! Mais la porte est fermée... Entrez le Code à 4 Chiffres pour accéder au barrage</h1>
-    <input type="text" id="code" maxlength="4" placeholder="Code à 4 chiffres">
-    <button onclick="verifyCode()">Vérifier</button>
-    <p id="message"></p>
-    <button id="hintButton" class="hidden" onclick="showHint()">Indice ?</button>
+    <div id="step1">
+        <h1>Chères agents, il faut agir vite. Où voulez-vous aller fouiller maintenant ?</h1>
+        <div class="choice" onclick="selectLocation('Les Deux Rives')">Au café Les Deux Rives</div>
+        <div class="choice" onclick="selectLocation('Chez les Baratgin')">Chez les Baratgin</div>
+        <div class="choice" onclick="selectLocation('Chez RS')">Chez RS</div>
+        <div class="choice" onclick="selectLocation('Théâtre des Champs-Elysées')">Au théâtre des Champs-Elysées</div>
+        <p id="response1" class="error hidden">NON ! Vous n'avez pas de temps à perdre. Essayez un autre lieu.</p>
+        <p id="success1" class="success hidden">Cela me paraît une bonne piste : foncez !</p>
+        <button onclick="nextStep(2)" class="hidden" id="nextButton1">Étape suivante</button>
+    </div>
+
+    <div id="step2" class="hidden">
+        <h1>Où voulez-vous aller fouiller maintenant ?</h1>
+        <input type="text" id="locationInput" placeholder="Entrez le lieu">
+        <button onclick="checkLocation()">Vérifier</button>
+        <p id="response2" class="error hidden">NON ! Vous n'avez pas de temps à perdre. Essayez un autre lieu.</p>
+        <p id="success2" class="success hidden">Cela me paraît une bonne piste : foncez !</p>
+        <button onclick="nextStep(3)" class="hidden" id="nextButton2">Étape suivante</button>
+    </div>
+
+    <div id="step3" class="hidden">
+        <h1>Chères agents, votre collègue a un rapport à vous remettre. Voulez-vous l'écouter ?</h1>
+        <button onclick="playAudio()" class="choice">Écouter le rapport</button>
+        <p id="audioResponse" class="success hidden">Écoutez attentivement le rapport audio.</p>
+        <button onclick="nextStep(4)" class="hidden" id="nextButton3">Étape suivante</button>
+    </div>
+
+    <div id="step4" class="hidden">
+        <h1>Vous êtes arrivées devant le bâtiment du barrage ! Mais la porte est fermée... Entrez le Code à 4 Chiffres pour accéder au barrage</h1>
+        <input type="text" id="code" maxlength="4" placeholder="Code à 4 chiffres">
+        <button onclick="verifyCode()">Vérifier</button>
+        <p id="message"></p>
+        <button id="hintButton" class="hidden" onclick="showHint()">Indice ?</button>
+    </div>
+
+    <audio id="audioReport" controls class="hidden">
+        <source src="https://github.com/Iris3dinechin/new-verification-code-page/raw/91c8efdebf94a117e9e9b0bbbfcea4e7860a840c/p_39962246_587.mp3" type="audio/mpeg">
+        Votre navigateur ne supporte pas l'élément audio.
+    </audio>
 
     <script>
+        let currentStep = 1;
         let attemptCount = 0;
         let hintIndex = 0;
         const hints = [
@@ -43,6 +80,54 @@
             "Les couleurs primaires servent à générer toutes les couleurs que l'on veut !",
             "Une case de la grille doit être <span class='important'>entièrement</span> recouverte de la couleur souhaitée."
         ];
+
+        function selectLocation(location) {
+            const response1 = document.getElementById('response1');
+            const success1 = document.getElementById('success1');
+            const nextButton1 = document.getElementById('nextButton1');
+            if (location === 'Les Deux Rives') {
+                response1.classList.add('hidden');
+                success1.classList.remove('hidden');
+                nextButton1.classList.remove('hidden');
+            } else {
+                response1.classList.remove('hidden');
+                success1.classList.add('hidden');
+                nextButton1.classList.add('hidden');
+            }
+        }
+
+        function nextStep(step) {
+            document.getElementById('step' + currentStep).classList.add('hidden');
+            document.getElementById('audioReport').classList.add('hidden');
+            currentStep = step;
+            document.getElementById('step' + currentStep).classList.remove('hidden');
+        }
+
+        function checkLocation() {
+            const input = document.getElementById('locationInput').value.toUpperCase();
+            const response2 = document.getElementById('response2');
+            const success2 = document.getElementById('success2');
+            const nextButton2 = document.getElementById('nextButton2');
+            if (input === 'CIRED') {
+                response2.classList.add('hidden');
+                success2.classList.remove('hidden');
+                nextButton2.classList.remove('hidden');
+            } else {
+                response2.classList.remove('hidden');
+                success2.classList.add('hidden');
+                nextButton2.classList.add('hidden');
+            }
+        }
+
+        function playAudio() {
+            const audioResponse = document.getElementById('audioResponse');
+            const nextButton3 = document.getElementById('nextButton3');
+            const audioReport = document.getElementById('audioReport');
+            audioResponse.classList.remove('hidden');
+            nextButton3.classList.remove('hidden');
+            audioReport.classList.remove('hidden');
+            audioReport.play();
+        }
 
         function verifyCode() {
             const code = document.getElementById('code').value;
