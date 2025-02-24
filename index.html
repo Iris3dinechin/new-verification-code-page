@@ -65,19 +65,24 @@
     </div>
 
     <div class="container hidden" id="step3">
-        <h1>Chères agents, votre collègue a un rapport à vous remettre. Voulez-vous l'écouter ?</h1>
-        <button onclick="playAudio()" class="choice">Écouter le rapport</button>
-        <p id="audioResponse" class="success hidden">Écoutez attentivement le rapport audio.</p>
-        <button onclick="nextStep(4)" class="hidden" id="nextButton3">Étape suivante</button>
+        <h1>Demandez la 3ème enveloppe avant de continuer.</h1>
+        <button onclick="nextStep(4)" class="choice">Étape suivante</button>
     </div>
 
     <div class="container hidden" id="step4">
-        <h1>Êtes-vous sûres d'avoir bien fouillé partout au CIRED ?</h1>
-        <button class="choice" onclick="nextStep(5)">OUI</button>
-        <button class="choice" onclick="nextStep(3)">NON</button>
+        <h1>Chères agents, votre collègue a un rapport à vous remettre. Voulez-vous l'écouter ?</h1>
+        <button onclick="playAudio()" class="choice">Écouter le rapport</button>
+        <p id="audioResponse" class="success hidden">Écoutez attentivement le rapport audio.</p>
+        <button onclick="nextStep(5)" class="hidden" id="nextButton3">Étape suivante</button>
     </div>
 
     <div class="container hidden" id="step5">
+        <h1>Êtes-vous sûres d'avoir bien fouillé partout au CIRED ?</h1>
+        <button class="choice" onclick="nextStep(6)">OUI</button>
+        <button class="choice" onclick="nextStep(4)">NON</button>
+    </div>
+
+    <div class="container hidden" id="step6">
         <h1>Où pensez-vous que Charles est retenu prisonnier ?</h1>
         <div>
             <label for="department">Département : </label>
@@ -89,10 +94,15 @@
         </div>
         <button onclick="verifyAnswers()">Vérifier</button>
         <p id="answerMessage" class="hidden"></p>
-        <button onclick="nextStep(6)" class="hidden" id="nextButton5">Étape suivante</button>
+        <button onclick="nextStep(7)" class="hidden" id="nextButton5">Étape suivante</button>
     </div>
 
-    <div class="container hidden" id="step6">
+    <div class="container hidden" id="step7">
+        <h1>Demandez la 4ème enveloppe avant de continuer.</h1>
+        <button onclick="nextStep(8)" class="choice">Étape suivante</button>
+    </div>
+
+    <div class="container hidden" id="step8">
         <h1>Vous êtes arrivées devant le bâtiment du barrage ! Mais la porte est fermée... Entrez le Code à 4 Chiffres pour accéder au barrage</h1>
         <input type="text" id="code" maxlength="4" placeholder="Code à 4 chiffres">
         <button onclick="verifyCode()">Vérifier</button>
@@ -206,7 +216,7 @@
         }
 
         function showAlert() {
-            alert("Vous n'êtes pas là pour enfiler des perles ! Charles est peut-être en danger, et Laulau s'inquiète ! Du nerf !!");
+            alert("Vous n'êtes pas là pour enfiler des perles ! Charles est peut-être en danger, et Laure s'inquiète ! Du nerf !!");
         }
     </script>
 </body>
