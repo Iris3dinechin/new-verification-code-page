@@ -31,23 +31,23 @@
     </style>
 </head>
 <body>
-       <div id="step2" class="hidden">
+       <div id="step1">
         <h1>Où voulez-vous aller fouiller maintenant ?</h1>
         <input type="text" id="locationInput" placeholder="Entrez le lieu">
         <button onclick="checkLocation()">Vérifier</button>
         <p id="response2" class="error hidden">NON ! Vous n'avez pas de temps à perdre. Essayez un autre lieu.</p>
         <p id="success2" class="success hidden">Cela me paraît une bonne piste : foncez !</p>
-        <button onclick="nextStep(3)" class="hidden" id="nextButton2">Étape suivante</button>
+        <button onclick="nextStep(2)" class="hidden" id="nextButton2">Étape suivante</button>
     </div>
 
-    <div id="step3" class="hidden">
+    <div id="step2" class="hidden">
         <h1>Chères agents, votre collègue a un rapport à vous remettre. Voulez-vous l'écouter ?</h1>
         <button onclick="playAudio()" class="choice">Écouter le rapport</button>
         <p id="audioResponse" class="success hidden">Écoutez attentivement le rapport audio.</p>
-        <button onclick="nextStep(4)" class="hidden" id="nextButton3">Étape suivante</button>
+        <button onclick="nextStep(3)" class="hidden" id="nextButton3">Étape suivante</button>
     </div>
 
-    <div id="step4" class="hidden">
+    <div id="step3" class="hidden">
         <h1>Vous êtes arrivées devant le bâtiment du barrage ! Mais la porte est fermée... Entrez le Code à 4 Chiffres pour accéder au barrage</h1>
         <input type="text" id="code" maxlength="4" placeholder="Code à 4 chiffres">
         <button onclick="verifyCode()">Vérifier</button>
